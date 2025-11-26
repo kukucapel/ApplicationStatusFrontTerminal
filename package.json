@@ -3,7 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "PORT=3001 next dev --webpack",
+        "dev": "next dev --webpack",
+        "dev_terminal": "PORT=3001 next dev --webpack",
         "build": "next build",
         "start": "next start"
     },

@@ -10,7 +10,8 @@ export default function HomeMainBody({}: HomeMainBodyProps) {
         >
             <div className="w-full max-w-md">
                 <Logo
-                    title="Записаться на личный приём"
+                    typeLogo={2}
+                    title="Администрация городского округа Калуги"
                     className="text-2xl text-center mb-8"
                 />
             </div>
