@@ -4,6 +4,7 @@ import HomeButton from '../Home/HomeButton';
 import Logo from '../ui/Logo';
 import { Home, User } from 'lucide-react';
 import { useState } from 'react';
+import Button from '../ui/Button';
 
 interface AppointmentMainBodyProps {
     person: any;
@@ -38,10 +39,23 @@ export default function AppointmentMainBody({
                             {person.fio}
                         </div>
                         <div>
-                            <textarea
-                                className="w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none"
-                                placeholder="Введите тему обращения"
-                            ></textarea>
+                            {step === 1 ? (
+                                <textarea
+                                    className="w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none"
+                                    placeholder="Введите тему обращения"
+                                ></textarea>
+                            ) : step === 2 ? (
+                                <textarea
+                                    className="w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none"
+                                    placeholder="Введите подробности обращения"
+                                ></textarea>
+                            ) : (
+                                step === 3 && (
+                                    <Button styleColor="white">
+                                        Выберете отдел
+                                    </Button>
+                                )
+                            )}
                         </div>
                         <div className="flex justify-center gap-20">
                             <HomeButton
