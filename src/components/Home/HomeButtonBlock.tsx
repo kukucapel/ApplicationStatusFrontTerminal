@@ -1,3 +1,4 @@
+import { gos } from '@/lib/gos';
 import Button from '../ui/Button';
 import HomeButton from '../ui/HomeButton';
 import { useRouter } from 'next/navigation';
@@ -11,6 +12,10 @@ interface HomeButtonBlockProps {}
 
 export default function HomeButtonBlock({}: HomeButtonBlockProps) {
     const router = useRouter();
+
+    const handleGosClick = async () => {
+        await gos();
+    };
 
     return (
         <div className="flex gap-20">
@@ -29,6 +34,9 @@ export default function HomeButtonBlock({}: HomeButtonBlockProps) {
                     styleColor={`${index % 2 === 0 ? 'blue' : 'white'}`}
                     className="px-20 py-12 text-2xl rounded-4xl"
                     key={index}
+                    onClick={() => {
+                        if (index === 1) handleGosClick();
+                    }}
                 >
                     {button[1]}
                 </HomeButton>
