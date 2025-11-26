@@ -9,7 +9,7 @@ export default function Logo({ className, title, typeLogo = 1 }: LogoProps) {
         <div className={`${className} animate-fade-in`}>
             <div
                 className={`inline-block p-3 ${
-                    typeLogo === 1 && 'bg-blue-100'
+                    typeLogo === 1 && 'bg-blue-100 rounded-full'
                 } rounded-2xl `}
             >
                 {typeLogo === 1 ? (
@@ -26,6 +26,12 @@ export default function Logo({ className, title, typeLogo = 1 }: LogoProps) {
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                         />
                     </svg>
+                ) : typeLogo === 3 ? (
+                    <img
+                        src="/gu-logo.png"
+                        alt="Герб города"
+                        className=" h-20"
+                    />
                 ) : (
                     <img
                         src="/gu-logo.png"
@@ -39,7 +45,9 @@ export default function Logo({ className, title, typeLogo = 1 }: LogoProps) {
                 <h1 className="text-3xl sm:text-6xl font-bold text-gray-900 mb-2">
                     {title || 'Система личного приёма'}
                 </h1>
-                <p className="text-2xl text-gray-600">Город Калуга</p>
+                <p className="text-2xl text-gray-600">
+                    {typeLogo !== 3 && 'Что-то'}
+                </p>
             </div>
         </div>
     );
