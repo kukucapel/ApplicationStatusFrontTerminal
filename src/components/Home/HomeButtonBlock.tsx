@@ -1,4 +1,3 @@
-import { gos } from '@/lib/gos';
 import Button from '../ui/Button';
 import HomeButton from '../ui/HomeButton';
 import { useRouter } from 'next/navigation';
@@ -13,8 +12,28 @@ interface HomeButtonBlockProps {}
 export default function HomeButtonBlock({}: HomeButtonBlockProps) {
     const router = useRouter();
 
-    const handleGosClick = async () => {
-        await gos();
+    const handleGosClick = () => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://app.kaluga-gov.ru/v2/index.php';
+
+        // скрытые поля
+        const fields = {
+            type: 'hidden',
+            name: 'url',
+            value: 'http://192.168.8.12:3001',
+        };
+
+        Object.entries(fields).forEach(([name, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
     };
 
     return (
