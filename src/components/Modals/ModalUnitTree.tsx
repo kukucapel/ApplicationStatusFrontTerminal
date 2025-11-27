@@ -8,7 +8,10 @@ import { Building2, ChevronDown, ChevronRight, X } from 'lucide-react';
 interface UnitTreeModalProps {
     onClose: () => void;
     handleSubmit?: (newUnitId: number) => Promise<void>;
-    handleChange?: (newUnitId: number, newUnitName: string) => void;
+    handleChange?: (
+        newUnitId: number | null,
+        newUnitName: string | null
+    ) => void;
     unitTree: Unit;
     selectedNow: number;
 }
@@ -124,7 +127,7 @@ export default function ModalUnitTree({
                 <div className="px-10 pt-10 overflow-y-auto flex-1 custom-scroll">
                     <div className="mb-7 flex justify-between items-center">
                         <span className="text-xl">
-                            Назначение исполнительного органа
+                            Выбор управления для заявки
                         </span>
                         <Button
                             styleColor="white"
@@ -152,6 +155,17 @@ export default function ModalUnitTree({
                 </div>
                 <div className="transition-all sticky px-10 py-4 bottom-0 border-gray-300 duration-150 flex gap-3 border-t">
                     <Button
+                        onClick={() => {
+                            if (handleChange) {
+                                handleChange(null, null);
+                            }
+                        }}
+                        styleColor="blue"
+                        className="flex-1 py-2 text-xl hover:bg-blue-700"
+                    >
+                        Я не знаю управления
+                    </Button>
+                    <Button
                         isActive={isActive}
                         styleColor="blue"
                         onClick={() => {
@@ -159,20 +173,13 @@ export default function ModalUnitTree({
                                 handleChange(newSelected, newUnitName);
                             }
                         }}
-                        className={`flex-1  ${
+                        className={`flex-1 text-xl py-3  ${
                             isActive
                                 ? 'bg-blue-400'
                                 : 'bg-blue-600 hover:bg-blue-700'
                         }`}
                     >
                         Сохранить
-                    </Button>
-                    <Button
-                        onClick={() => onClose()}
-                        styleColor="blue"
-                        className="flex-1 py-2 hover:bg-blue-700"
-                    >
-                        Отмена
                     </Button>
                 </div>
             </div>

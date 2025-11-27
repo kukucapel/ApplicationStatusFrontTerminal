@@ -86,12 +86,15 @@ export default function AppointmentMainBody({
                                 />
                             ) : (
                                 step === 3 && (
-                                    <Button
-                                        styleColor="white"
-                                        onClick={() => setShowUnit(true)}
-                                    >
-                                        Выберите отдел
-                                    </Button>
+                                    <div className="flex gap-3 justify-center">
+                                        <HomeButton
+                                            styleColor="color"
+                                            className="flex gap-3 items-center px-4 py-5 text-2xl rounded-xl"
+                                            onClick={() => setShowUnit(true)}
+                                        >
+                                            {'Выберите управление'}
+                                        </HomeButton>
+                                    </div>
                                 )
                             )}
                         </div>
