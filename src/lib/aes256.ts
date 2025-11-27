@@ -87,3 +87,19 @@ export function decrypt(encryptedBase64: string) {
   };
   return person;
 }
+
+export function encryptJson(data: any) {
+  const key = normalizeKey(process.env.KEY || '');
+  const iv = normalizeIv(process.env.IV || '');
+
+  const json = JSON.stringify(data);
+
+  const cipher = crypto.createCipheriv('aes-256-ctr', key, iv);
+  console.log(cipher);
+  const encrypted = Buffer.concat([
+    cipher.update(json, 'base64'),
+    cipher.final(),
+  ]);
+
+  return encrypted.toString('base64');
+}

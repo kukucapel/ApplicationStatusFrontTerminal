@@ -4,9 +4,14 @@ import Logo from '@/components/ui/Logo';
 import HomeButtonBlock from '@/components/Home/HomeButtonBlock';
 import { useRouter } from 'next/navigation';
 import { Mail, CalendarDays, Settings } from 'lucide-react';
+import KeyboardSimple from '@/components/ui/KeyboardSimple';
 
 export default function Home() {
     const router = useRouter();
+
+    const onChange = (key: string) => {
+        console.log(key);
+    };
 
     const handleGosClick = () => {
         const form = document.createElement('form');
@@ -62,6 +67,7 @@ export default function Home() {
                     className="text-2xl text-center mb-8"
                 />
             </div>
+            <KeyboardSimple onChange={onChange} />
             <HomeButtonBlock BUTTONS={BUTTONS} />
         </div>
     );

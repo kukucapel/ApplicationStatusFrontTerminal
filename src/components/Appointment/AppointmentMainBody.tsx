@@ -12,6 +12,8 @@ import { ApplicationI } from '@/dtos/ApplicationDto';
 import ModalUnitTree from '../Modals/ModalUnitTree';
 import ModalAppointment from '../Modals/ModalAppointment';
 import ModalAlert from '../Modals/ModalAlert';
+import { sendApplication } from '@/lib/appointment';
+import KeyboardSimple from '../ui/KeyboardSimple';
 
 interface AppointmentMainBodyProps {
     person: any;
@@ -27,6 +29,9 @@ export default function AppointmentMainBody({
         question: '',
         assigned_unit_id: null,
     });
+    const onChange = (key: string) => {
+        console.log(key);
+    };
     const [alert, setAlert] = useState<boolean>(false);
     const [showSend, setShowSend] = useState<boolean>(false);
 
@@ -37,7 +42,7 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        console.log('Send');
+        await sendApplication({ ...person, ...data });
         setAlert(false);
         setShowSend(false);
         setStep(4);
@@ -191,6 +196,7 @@ export default function AppointmentMainBody({
                     onClose={() => setAlert(false)}
                 />
             )}
+            {/* <KeyboardSimple onChange={onChange} /> */}
         </div>
     );
 }
