@@ -3,8 +3,13 @@ import { useRouter } from 'next/navigation';
 import HomeButton from '../Home/HomeButton';
 import Logo from '../ui/Logo';
 import { Home, User } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../ui/Button';
+import Textarea from '../ui/Textarea';
+import { Unit } from '@/dtos/UnitDto';
+import { getUnitTreeForApplication } from '@/lib/unit';
+import { ApplicationI } from '@/dtos/ApplicationDto';
+import ModalUnitTree from '../Modals/ModalUnitTree';
 
 interface AppointmentMainBodyProps {
     person: any;
@@ -15,7 +20,29 @@ export default function AppointmentMainBody({
 }: AppointmentMainBodyProps) {
     const router = useRouter();
     const [step, setStep] = useState(1);
-    const [data, setData] = useState({ theme: '', question: '' });
+    const [data, setData] = useState<ApplicationI>({
+        theme: '',
+        question: '',
+        assigned_unit_id: null,
+    });
+    const [unitName, setUnitName] = useState<string | null>(null);
+    const [showUnit, setShowUnit] = useState<boolean>(false);
+    const [unit, setUnit] = useState<Unit | null>(null);
+    console.log(unitName);
+    const handleSubmitChangeUnit = (
+        newSelected: number,
+        newUnitName: string
+    ) => {
+        setData({ ...data, assigned_unit_id: newSelected });
+        setUnitName(newUnitName);
+        setShowUnit(false);
+    };
+
+    useEffect(() => {
+        const load = async () =>
+            setUnit((await getUnitTreeForApplication()).items);
+        load();
+    }, []);
 
     return (
         <div
@@ -39,24 +66,36 @@ export default function AppointmentMainBody({
                             {person.fio}
                         </div>
                         <div>
-                            {step === 1 ? (
-                                <textarea
-                                    className="w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none"
-                                    placeholder="Введите тему обращения"
-                                ></textarea>
-                            ) : step === 2 ? (
-                                <textarea
-                                    className="w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none"
-                                    placeholder="Введите подробности обращения"
-                                ></textarea>
+                            {step === 1 || step === 2 ? (
+                                <Textarea
+                                    value={
+                                        step === 1 ? data.theme : data.question
+                                    }
+                                    onChange={(e) =>
+                                        setData((prev) => ({
+                                            ...prev,
+                                            [step === 1 ? 'theme' : 'question']:
+                                                e.target.value,
+                                        }))
+                                    }
+                                    placeholder={
+                                        step === 1
+                                            ? 'Введите тему обращения'
+                                            : 'Введите подробности обращения'
+                                    }
+                                />
                             ) : (
                                 step === 3 && (
-                                    <Button styleColor="white">
-                                        Выберете отдел
+                                    <Button
+                                        styleColor="white"
+                                        onClick={() => setShowUnit(true)}
+                                    >
+                                        Выберите отдел
                                     </Button>
                                 )
                             )}
                         </div>
+
                         <div className="flex justify-center gap-20">
                             <HomeButton
                                 styleColor="white"
@@ -73,6 +112,10 @@ export default function AppointmentMainBody({
                                 className={`flex gap-3  ${
                                     step === 3 ? 'px-35' : 'px-35'
                                 } items-center  py-8 text-2xl rounded-4xl`}
+                                isActive={
+                                    (step === 1 && !data.theme) ||
+                                    (step === 2 && !data.question)
+                                }
                                 onClick={() => {
                                     if (step !== 3) setStep((prev) => prev + 1);
                                 }}
@@ -83,6 +126,14 @@ export default function AppointmentMainBody({
                     </div>
                 </div>
             </div>
+            {showUnit && unit && (
+                <ModalUnitTree
+                    selectedNow={data.assigned_unit_id || 0}
+                    unitTree={unit}
+                    handleChange={handleSubmitChangeUnit}
+                    onClose={() => setShowUnit(false)}
+                ></ModalUnitTree>
+            )}
         </div>
     );
 }

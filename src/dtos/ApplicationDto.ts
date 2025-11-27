@@ -1,12 +1,16 @@
-export interface NewApplicationFormData {
-  full_name?: string;
-  email?: string;
-  phone?: string;
-  registration_address?: string;
-  registration_postal_code?: string;
-  residence_address?: string;
-  residence_postal_code?: string;
-  recipient?: string;
-  subject?: string;
-  description?: string;
+export interface ApplicantI {
+  fio: string;
+  email: string;
+  phone: string;
+  address1: string;
+  address2: string;
+  postal_code1: string;
+  postal_code2: string;
 }
+export interface ApplicationI {
+  theme: string;
+  question: string;
+  assigned_unit_id: number | null;
+}
+
+export interface FullApplicationI extends ApplicantI, ApplicationI {}
