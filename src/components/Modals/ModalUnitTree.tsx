@@ -161,7 +161,7 @@ export default function ModalUnitTree({
                             }
                         }}
                         styleColor="blue"
-                        className="flex-1 py-2 text-xl hover:bg-blue-700"
+                        className="flex-1 py-4 text-xl hover:bg-blue-700"
                     >
                         Я не знаю управления
                     </Button>

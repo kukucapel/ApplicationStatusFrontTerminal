@@ -10,6 +10,8 @@ import { Unit } from '@/dtos/UnitDto';
 import { getUnitTreeForApplication } from '@/lib/unit';
 import { ApplicationI } from '@/dtos/ApplicationDto';
 import ModalUnitTree from '../Modals/ModalUnitTree';
+import ModalAppointment from '../Modals/ModalAppointment';
+import ModalAlert from '../Modals/ModalAlert';
 
 interface AppointmentMainBodyProps {
     person: any;
@@ -25,13 +27,25 @@ export default function AppointmentMainBody({
         question: '',
         assigned_unit_id: null,
     });
+    const [alert, setAlert] = useState<boolean>(false);
+    const [showSend, setShowSend] = useState<boolean>(false);
+
     const [unitName, setUnitName] = useState<string | null>(null);
     const [showUnit, setShowUnit] = useState<boolean>(false);
     const [unit, setUnit] = useState<Unit | null>(null);
-    console.log(unitName);
+
+    const [sendFlag, setSendFlag] = useState<boolean>(true);
+
+    const handleSend = async () => {
+        console.log('Send');
+        setAlert(false);
+        setShowSend(false);
+        setStep(4);
+    };
+
     const handleSubmitChangeUnit = (
-        newSelected: number,
-        newUnitName: string
+        newSelected: number | null,
+        newUnitName: string | null
     ) => {
         setData({ ...data, assigned_unit_id: newSelected });
         setUnitName(newUnitName);
@@ -48,14 +62,16 @@ export default function AppointmentMainBody({
         <div
             className={` transition-all duration-200 min-h-screen gap-10  flex flex-col items-center justify-center bg-linear-to-br from-blue-50 via-white to-sky-50 p-4`}
         >
-            <HomeButton
-                styleColor="white"
-                className="absolute top-0 left-0 m-4 rounded-xl p-2 opacity-80 flex items-center"
-                onClick={() => router.push('/')}
-            >
-                <Home className=" w-10 h-10 p-2" />
-                <span className="text-xl pr-2">На главную</span>
-            </HomeButton>
+            {step !== 4 && (
+                <HomeButton
+                    styleColor="white"
+                    className="absolute top-0 left-0 m-4 rounded-xl p-2 opacity-80 flex items-center"
+                    onClick={() => router.push('/')}
+                >
+                    <Home className=" w-10 h-10 p-2" />
+                    <span className="text-xl pr-2">На главную</span>
+                </HomeButton>
+            )}
 
             <div className="w-full max-w-3xl ">
                 <div className={`text-2xl text-center mb-8 animate-fade-in`}>
@@ -84,48 +100,72 @@ export default function AppointmentMainBody({
                                             : 'Введите подробности обращения'
                                     }
                                 />
+                            ) : step === 3 ? (
+                                <div className="flex flex-col items-center gap-3 justify-center">
+                                    <span>К кому приём:</span>
+                                    <HomeButton
+                                        styleColor="color"
+                                        className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
+                                        onClick={() => {
+                                            setSendFlag(false);
+                                            setShowUnit(true);
+                                        }}
+                                    >
+                                        {sendFlag
+                                            ? 'Выберите управление'
+                                            : unitName ||
+                                              'Автоматически определить управление'}
+                                    </HomeButton>
+                                </div>
                             ) : (
-                                step === 3 && (
-                                    <div className="flex gap-3 justify-center">
-                                        <HomeButton
-                                            styleColor="color"
-                                            className="flex gap-3 items-center px-4 py-5 text-2xl rounded-xl"
-                                            onClick={() => setShowUnit(true)}
-                                        >
-                                            {'Выберите управление'}
-                                        </HomeButton>
-                                    </div>
-                                )
+                                <div className="flex flex-col items-center gap-10 justify-center">
+                                    <h3 className="text-4xl">
+                                        Ваша заявка отправлена
+                                    </h3>
+                                    <HomeButton
+                                        styleColor="color"
+                                        className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
+                                        onClick={() => router.push('/')}
+                                    >
+                                        Вернуться на главную
+                                    </HomeButton>
+                                </div>
                             )}
                         </div>
 
-                        <div className="flex justify-center gap-20">
-                            <HomeButton
-                                styleColor="white"
-                                className="flex gap-3 items-center px-35 py-8 text-2xl rounded-4xl"
-                                isActive={step === 1}
-                                onClick={() => {
-                                    if (step !== 1) setStep((prev) => prev - 1);
-                                }}
-                            >
-                                Назад
-                            </HomeButton>
-                            <HomeButton
-                                styleColor="blue"
-                                className={`flex gap-3  ${
-                                    step === 3 ? 'px-35' : 'px-35'
-                                } items-center  py-8 text-2xl rounded-4xl`}
-                                isActive={
-                                    (step === 1 && !data.theme) ||
-                                    (step === 2 && !data.question)
-                                }
-                                onClick={() => {
-                                    if (step !== 3) setStep((prev) => prev + 1);
-                                }}
-                            >
-                                {step === 3 ? 'Отправить' : 'Далее'}
-                            </HomeButton>
-                        </div>
+                        {step !== 4 && (
+                            <div className="flex justify-center gap-20">
+                                <HomeButton
+                                    styleColor="white"
+                                    className="flex gap-3 items-center px-35 py-8 text-2xl rounded-4xl"
+                                    isActive={step === 1}
+                                    onClick={() => {
+                                        if (step !== 1)
+                                            setStep((prev) => prev - 1);
+                                    }}
+                                >
+                                    Назад
+                                </HomeButton>
+                                <HomeButton
+                                    styleColor="blue"
+                                    className={`flex gap-3  ${
+                                        step === 3 ? 'px-35' : 'px-35'
+                                    } items-center  py-8 text-2xl rounded-4xl`}
+                                    isActive={
+                                        (step === 1 && !data.theme) ||
+                                        (step === 2 && !data.question) ||
+                                        (step === 3 && sendFlag)
+                                    }
+                                    onClick={() => {
+                                        if (step !== 3)
+                                            setStep((prev) => prev + 1);
+                                        else setShowSend(true);
+                                    }}
+                                >
+                                    {step === 3 ? 'Отправить' : 'Далее'}
+                                </HomeButton>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -136,6 +176,20 @@ export default function AppointmentMainBody({
                     handleChange={handleSubmitChangeUnit}
                     onClose={() => setShowUnit(false)}
                 ></ModalUnitTree>
+            )}
+            {showSend && (
+                <ModalAppointment
+                    unitName={unitName}
+                    fullData={{ ...person, ...data }}
+                    onClose={() => setShowSend(false)}
+                    setAlert={setAlert}
+                />
+            )}
+            {alert && (
+                <ModalAlert
+                    handleSubmit={() => handleSend()}
+                    onClose={() => setAlert(false)}
+                />
             )}
         </div>
     );

@@ -1,6 +1,40 @@
 import crypto from 'crypto';
 import { unserialize } from 'php-serialize';
 
+export function normalizeAddress(raw: string) {
+  if (!raw) return '';
+  const parts = raw.split(',');
+
+  let final = '';
+  let part = parts[0].split(' ');
+  final += part[0] + ' ' + part[1] + ', ';
+
+  part = parts[1].split(' ');
+
+  if (part[1] !== '-') {
+    final += part[1] + ' ' + part[2] + ', ';
+  }
+  part = parts[2].split(' ');
+
+  final += part[1] + ' ' + part[2] + ', ';
+
+  part = parts[3].split(' ');
+
+  if (part[1] !== '-') {
+    final += part[1] + ' ' + part[2] + ', ';
+  }
+
+  part = parts[5].split(' ');
+
+  final += part[1] + ' ' + part[2] + ', ';
+
+  part = parts[7].split(' ');
+
+  final += part[4] + ', ' + part[5];
+
+  return final;
+}
+
 function normalizeFIO(fio: string): string {
   return fio
     .split(' ')
@@ -46,8 +80,8 @@ export function decrypt(encryptedBase64: string) {
     fio: normalizeFIO(obj.E_FIO) || '',
     email: obj.E_MAIL || '',
     phone: obj.E_PHONE || '',
-    address1: obj.E_ADR || '',
-    address2: obj.E_ADR_FACT || obj.E_ADR,
+    address1: normalizeAddress(obj.E_ADR) || '',
+    address2: normalizeAddress(obj.E_ADR) || normalizeAddress(obj.E_ADR),
     postal_code1: obj.E_ZIP || '',
     postal_code2: obj.E_ZIP_FACT || obj.E_ZIP,
   };
