@@ -79,7 +79,7 @@ function TreeNode({
                         )}
                     </span>
                 )}
-                <div className="flex items-center gap-2  flex-grow">
+                <div className="flex items-center gap-2  grow">
                     <Building2 className="w-5" />
                     <span className="max-w-[70%]">{node.unit_name}</span>
 
