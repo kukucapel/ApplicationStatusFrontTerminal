@@ -93,7 +93,7 @@ export function encryptJson(data: any) {
   const iv = normalizeIv(process.env.IV || '');
 
   const json = JSON.stringify(data);
-
+  console.log(data);
   const cipher = crypto.createCipheriv('aes-256-ctr', key, iv);
   console.log(cipher);
   const encrypted = Buffer.concat([
