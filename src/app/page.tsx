@@ -18,7 +18,7 @@ export default function Home() {
         const fields = {
             url: 'http://localhost:3000/api/gos-terminal',
             type: 'terminal',
-            element_id: 'http://localhost:3000/api/gos-terminal',
+            element_id: process.env.NEXT_PUBLIC_GOS_ELEMENT!,
         };
 
         Object.entries(fields).forEach(([name, value]) => {
