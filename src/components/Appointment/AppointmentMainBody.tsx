@@ -72,10 +72,10 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        await sendApplication({ ...person, ...data });
-        // setAlert(false);
-        // setShowSend(false);
-        // setStep(4);
+        // await sendApplication({ ...person, ...data });
+        setAlert(false);
+        setShowSend(false);
+        setStep(4);
     };
 
     const handleSubmitChangeUnit = (
