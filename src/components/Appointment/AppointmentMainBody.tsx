@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import HomeButton from '../Home/HomeButton';
 import Logo from '../ui/Logo';
 import { Home, User } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../ui/Button';
 import Textarea from '../ui/Textarea';
 import { Unit } from '@/dtos/UnitDto';
@@ -29,11 +29,39 @@ export default function AppointmentMainBody({
         question: '',
         assigned_unit_id: null,
     });
+
     const onChange = (key: string) => {
-        console.log(key);
+        if (!focusedField) return;
+
+        setData((prev) => {
+            const current = prev[focusedField];
+
+            let updated = current;
+
+            if (key === '{space}') {
+                updated = current + ' ';
+            } else if (key === '{bksp}') {
+                updated = current.slice(0, -1);
+            } else {
+                updated = current + key;
+            }
+
+            return {
+                ...prev,
+                [focusedField]: updated,
+            };
+        });
     };
+
+    const keyboardRef = useRef<HTMLDivElement | null>(null);
+    const pageRef = useRef<HTMLDivElement | null>(null);
+
     const [alert, setAlert] = useState<boolean>(false);
     const [showSend, setShowSend] = useState<boolean>(false);
+    const [focusedField, setFocusedField] = useState<
+        'theme' | 'question' | null
+    >(null);
+    const [showKeyboard, setShowKeyboard] = useState(false);
 
     const [unitName, setUnitName] = useState<string | null>(null);
     const [showUnit, setShowUnit] = useState<boolean>(false);
@@ -42,7 +70,7 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        await sendApplication({ ...person, ...data });
+        // await sendApplication({ ...person, ...data });
         setAlert(false);
         setShowSend(false);
         setStep(4);
@@ -63,8 +91,33 @@ export default function AppointmentMainBody({
         load();
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (!showKeyboard) return;
+
+            const target = e.target as Node;
+
+            const clickedInsideKeyboard =
+                keyboardRef.current && keyboardRef.current.contains(target);
+
+            const clickedInsideTextarea =
+                pageRef.current &&
+                pageRef.current.querySelector('textarea')?.contains(target);
+
+            if (!clickedInsideKeyboard && !clickedInsideTextarea) {
+                setShowKeyboard(false);
+                setFocusedField(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () =>
+            document.removeEventListener('mousedown', handleClickOutside);
+    }, [showKeyboard]);
+
     return (
         <div
+            ref={pageRef}
             className={` transition-all duration-200 min-h-screen gap-10  flex flex-col items-center justify-center bg-linear-to-br from-blue-50 via-white to-sky-50 p-4`}
         >
             {step !== 4 && (
@@ -81,12 +134,27 @@ export default function AppointmentMainBody({
             <div className="w-full max-w-3xl ">
                 <div className={`text-2xl text-center mb-8 animate-fade-in`}>
                     <div className="flex flex-col gap-10">
-                        <Logo typeLogo={3} title="Запись на личный приём" />
-                        <div className="flex items-center gap-5 justify-center text-gray-900 text-4xl">
-                            <User className="bg-blue-100 w-10 h-10 rounded-2xl p-1" />
-                            {person.fio}
-                        </div>
-                        <div>
+                        <>
+                            <Logo
+                                className={`transition-all duration-200  ${
+                                    !showKeyboard
+                                        ? 'opacity-100 translate-y-0'
+                                        : 'opacity-0 -translate-y-10'
+                                }`}
+                                typeLogo={3}
+                                title="Запись на личный приём"
+                            />
+                        </>
+
+                        <div
+                            className={`transition-all duration-200  flex flex-col gap-10 ${
+                                showKeyboard && '-translate-y-31'
+                            }`}
+                        >
+                            <div className="flex items-center gap-5 justify-center text-gray-900 text-4xl">
+                                <User className="bg-blue-100 w-10 h-10 rounded-2xl p-1" />
+                                {person.fio}
+                            </div>
                             {step === 1 || step === 2 ? (
                                 <Textarea
                                     value={
@@ -104,6 +172,15 @@ export default function AppointmentMainBody({
                                             ? 'Введите тему обращения'
                                             : 'Введите подробности обращения'
                                     }
+                                    onFocus={() => {
+                                        setFocusedField(
+                                            step === 1 ? 'theme' : 'question'
+                                        );
+                                        setShowKeyboard(true);
+                                    }}
+                                    className={`${
+                                        showKeyboard && 'ring-2 ring-blue-500 '
+                                    } `}
                                 />
                             ) : step === 3 ? (
                                 <div className="flex flex-col items-center gap-3 justify-center">
@@ -137,16 +214,17 @@ export default function AppointmentMainBody({
                                 </div>
                             )}
                         </div>
-
                         {step !== 4 && (
                             <div className="flex justify-center gap-20">
                                 <HomeButton
                                     styleColor="white"
                                     className="flex gap-3 items-center px-35 py-8 text-2xl rounded-4xl"
-                                    isActive={step === 1}
                                     onClick={() => {
-                                        if (step !== 1)
+                                        if (step !== 1) {
                                             setStep((prev) => prev - 1);
+                                        } else {
+                                            router.push('/');
+                                        }
                                     }}
                                 >
                                     Назад
@@ -196,7 +274,11 @@ export default function AppointmentMainBody({
                     onClose={() => setAlert(false)}
                 />
             )}
-            {/* <KeyboardSimple onChange={onChange} /> */}
+            {showKeyboard && (
+                <div ref={keyboardRef}>
+                    <KeyboardSimple onChange={onChange} />
+                </div>
+            )}
         </div>
     );
 }
