@@ -65,7 +65,7 @@ export default function KeyboardSimple({ onChange }: KeyboardSimpleProps) {
                 left: 0,
                 right: 0,
                 zIndex: 999,
-                height: '350px',
+                height: '450px',
             }}
         >
             <Keyboard
@@ -90,11 +90,11 @@ export default function KeyboardSimple({ onChange }: KeyboardSimpleProps) {
             />
             <style jsx global>{`
                 .hg-button {
-                    height: 70px !important;
+                    height: 120px !important;
                     font-size: 1.8rem !important;
                 }
                 .hg-row {
-                    height: 85px !important; /* увеличенная высота строки */
+                    height: 110px !important; /* увеличенная высота строки */
                     margin-bottom: 8px !important;
                 }
                 .hg-button {
