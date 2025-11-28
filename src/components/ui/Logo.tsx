@@ -2,9 +2,15 @@ interface LogoProps {
     className?: string;
     title?: string;
     typeLogo?: number;
+    subTitle?: string;
 }
 
-export default function Logo({ className, title, typeLogo = 1 }: LogoProps) {
+export default function Logo({
+    className,
+    title,
+    typeLogo = 1,
+    subTitle,
+}: LogoProps) {
     return (
         <div className={`${className} animate-fade-in`}>
             <div
@@ -45,9 +51,7 @@ export default function Logo({ className, title, typeLogo = 1 }: LogoProps) {
                 <h1 className="text-3xl sm:text-6xl font-bold text-gray-900 mb-2">
                     {title || 'Система личного приёма'}
                 </h1>
-                <p className="text-2xl text-gray-600">
-                    {typeLogo !== 3 && 'Что-то'}
-                </p>
+                <p className="text-2xl text-gray-600">{subTitle}</p>
             </div>
         </div>
     );
