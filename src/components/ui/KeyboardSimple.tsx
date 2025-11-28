@@ -65,6 +65,7 @@ export default function KeyboardSimple({ onChange }: KeyboardSimpleProps) {
                 left: 0,
                 right: 0,
                 zIndex: 999,
+                height: '350px',
             }}
         >
             <Keyboard
@@ -91,6 +92,14 @@ export default function KeyboardSimple({ onChange }: KeyboardSimpleProps) {
                 .hg-button {
                     height: 70px !important;
                     font-size: 1.8rem !important;
+                }
+                .hg-row {
+                    height: 85px !important; /* увеличенная высота строки */
+                    margin-bottom: 8px !important;
+                }
+                .hg-button {
+                    height: 100% !important;
+                    font-size: 2rem !important;
                 }
             `}</style>
         </div>
