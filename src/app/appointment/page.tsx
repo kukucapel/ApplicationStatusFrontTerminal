@@ -24,5 +24,5 @@ export default function Appointment({}: {}) {
     }, []);
     useEffect;
 
-    return <AppointmentMainBody person={person} />;
+    return person && <AppointmentMainBody person={person} />;
 }
