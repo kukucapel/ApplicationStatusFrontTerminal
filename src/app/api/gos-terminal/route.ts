@@ -8,6 +8,6 @@ export async function POST(req: Request) {
   const encoded = encodeURIComponent(String(personal));
 
   return NextResponse.redirect(
-    new URL(`/appointment?personal=${encoded}`, req.url)
+    new URL(`http://192.168.8.12:3001/appointment?personal=${encoded}`, req.url)
   );
 }
