@@ -178,8 +178,9 @@ export default function AppointmentMainBody({
                                         );
                                         setShowKeyboard(true);
                                     }}
-                                    className={`${
-                                        showKeyboard && 'ring-2 ring-blue-500 '
+                                    className={`h-60 ${
+                                        showKeyboard &&
+                                        'ring-2 ring-blue-500 h-100'
                                     } `}
                                 />
                             ) : step === 3 ? (

@@ -21,7 +21,7 @@ export default function Textarea({
         <textarea
             value={value}
             onChange={onChange}
-            className={`${className} w-full h-50 rounded-lg border border-gray-200 shadow-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none`}
+            className={`${className} w-full rounded-lg border border-gray-200 shadow-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-3 transition duration-200 resize-none`}
             placeholder={placeholder}
             {...props}
         ></textarea>
