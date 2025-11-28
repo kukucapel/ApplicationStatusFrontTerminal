@@ -15,7 +15,7 @@ export default function Home() {
 
         // скрытые поля
         const fields = {
-            url: 'http://localhost:3000/api/gos-terminal',
+            url: process.env.NEXT_PUBLIC_GOS_URL!,
             type: 'terminal',
             element_id: process.env.NEXT_PUBLIC_GOS_URL!,
         };
