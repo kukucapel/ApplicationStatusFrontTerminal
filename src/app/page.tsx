@@ -41,8 +41,8 @@ export default function Home() {
         {
             title: 'Записаться на приём',
             handleClick: () => {
-                // router.push('/appointment');
-                handleGosClick();
+                router.push('/appointment_auth');
+                // handleGosClick();
             },
             icon: CalendarDays,
         },

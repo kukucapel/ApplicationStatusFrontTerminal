@@ -5,7 +5,7 @@ import AppointmentMainBody from '@/components/Appointment/AppointmentMainBody';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function Appointment({}: {}) {
+export default function AppointmentAuth({}: {}) {
     const [person, setPerson] = useState(null);
     const search = useSearchParams();
 
@@ -22,7 +22,6 @@ export default function Appointment({}: {}) {
             .then((data) => setPerson(data))
             .catch((e) => console.error(e));
     }, []);
-    useEffect;
 
     return <AppointmentMainBody person={person} />;
 }
