@@ -75,7 +75,7 @@ export default function AppointmentMainBody({
         // await sendApplication({ ...person, ...data });
         setAlert(false);
         setShowSend(false);
-        setStep(4);
+        setStep(3);
     };
 
     const handleSubmitChangeUnit = (
