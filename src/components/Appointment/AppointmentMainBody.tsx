@@ -42,6 +42,8 @@ export default function AppointmentMainBody({
                 updated = current + ' ';
             } else if (key === '{bksp}') {
                 updated = current.slice(0, -1);
+            } else if (key === '{enter}') {
+                setShowKeyboard(false);
             } else {
                 updated = current + key;
             }
@@ -70,10 +72,10 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        // await sendApplication({ ...person, ...data });
-        setAlert(false);
-        setShowSend(false);
-        setStep(4);
+        await sendApplication({ ...person, ...data });
+        // setAlert(false);
+        // setShowSend(false);
+        // setStep(4);
     };
 
     const handleSubmitChangeUnit = (

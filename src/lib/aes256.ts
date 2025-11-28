@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { unserialize } from 'php-serialize';
+import { unserialize, serialize } from 'php-serialize';
 
 export function normalizeAddress(raw: string) {
   if (!raw) return '';
@@ -53,6 +53,7 @@ function normalizeKey(key: string) {
 }
 
 function normalizeIv(iv: string) {
+  console.log(iv);
   const buf = Buffer.from(iv, 'utf8');
   if (buf.length === 16) return buf;
 
@@ -76,6 +77,7 @@ export function decrypt(encryptedBase64: string) {
 
   const decryptedString = decrypted.toString('utf8');
   const obj = unserialize(decryptedString);
+
   const person = {
     fio: normalizeFIO(obj.E_FIO) || '',
     email: obj.E_MAIL || '',
@@ -86,19 +88,4 @@ export function decrypt(encryptedBase64: string) {
     postal_code2: obj.E_ZIP_FACT || obj.E_ZIP,
   };
   return person;
-}
-
-export function encryptJson(data: any) {
-  const key = normalizeKey(process.env.KEY || '');
-  const iv = normalizeIv(process.env.IV || '');
-
-  const json = JSON.stringify(data);
-
-  const cipher = crypto.createCipheriv('aes-256-ctr', key, iv);
-  const encrypted = Buffer.concat([
-    cipher.update(json, 'utf-8'),
-    cipher.final(),
-  ]);
-
-  return encrypted.toString('base64');
 }
