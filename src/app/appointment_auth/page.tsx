@@ -22,5 +22,10 @@ export default function Home() {
         return () => events.close();
     }, []);
 
-    return <h1>Load</h1>;
+    return (
+        <h1>
+            {' '}
+            <img src="/qr.png" alt="Герб города" className=" h-120" />
+        </h1>
+    );
 }

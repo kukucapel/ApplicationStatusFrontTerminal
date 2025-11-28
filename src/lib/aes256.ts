@@ -3,36 +3,36 @@ import { unserialize, serialize } from 'php-serialize';
 
 export function normalizeAddress(raw: string) {
   if (!raw) return '';
-  const parts = raw.split(',');
+  // const parts = raw.split(',');
 
-  let final = '';
-  let part = parts[0].split(' ');
-  final += part[0] + ' ' + part[1] + ', ';
+  // let final = '';
+  // let part = parts[0].split(' ');
+  // final += part[0] + ' ' + part[1] + ', ';
 
-  part = parts[1].split(' ');
+  // part = parts[1].split(' ');
 
-  if (part[1] !== '-') {
-    final += part[1] + ' ' + part[2] + ', ';
-  }
-  part = parts[2].split(' ');
+  // if (part[1] !== '-') {
+  //   final += part[1] + ' ' + part[2] + ', ';
+  // }
+  // part = parts[2].split(' ');
 
-  final += part[1] + ' ' + part[2] + ', ';
+  // final += part[1] + ' ' + part[2] + ', ';
 
-  part = parts[3].split(' ');
+  // part = parts[3].split(' ');
 
-  if (part[1] !== '-') {
-    final += part[1] + ' ' + part[2] + ', ';
-  }
+  // if (part[1] !== '-') {
+  //   final += part[1] + ' ' + part[2] + ', ';
+  // }
 
-  part = parts[5].split(' ');
+  // part = parts[5].split(' ');
 
-  final += part[1] + ' ' + part[2] + ', ';
+  // final += part[1] + ' ' + part[2] + ', ';
 
-  part = parts[7].split(' ');
+  // part = parts[7].split(' ');
 
-  final += part[4] + ', ' + part[5];
+  // final += part[4] + ', ' + part[5];
 
-  return final;
+  return raw;
 }
 
 function normalizeFIO(fio: string): string {
