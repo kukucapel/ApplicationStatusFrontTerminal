@@ -4,7 +4,6 @@ import Logo from '@/components/ui/Logo';
 import HomeButtonBlock from '@/components/Home/HomeButtonBlock';
 import { useRouter } from 'next/navigation';
 import { Mail, CalendarDays, Settings } from 'lucide-react';
-import KeyboardSimple from '@/components/ui/KeyboardSimple';
 
 export default function Home() {
     const router = useRouter();
@@ -18,7 +17,7 @@ export default function Home() {
         const fields = {
             url: 'http://localhost:3000/api/gos-terminal',
             type: 'terminal',
-            element_id: process.env.NEXT_PUBLIC_GOS_ELEMENT!,
+            element_id: process.env.NEXT_PUBLIC_GOS_URL!,
         };
 
         Object.entries(fields).forEach(([name, value]) => {
