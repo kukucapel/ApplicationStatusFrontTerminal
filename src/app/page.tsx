@@ -58,7 +58,7 @@ export default function Home() {
         >
             <div className="w-full max-w-3xl ">
                 <Logo
-                    subTitle="Что-то"
+                    subTitle="Система обработки обращений граждан"
                     typeLogo={2}
                     title="Администрация городского округа Калуги"
                     className="text-2xl text-center mb-8"

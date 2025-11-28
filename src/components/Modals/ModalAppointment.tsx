@@ -81,13 +81,13 @@ export default function ModalAppointment({
                         icon={FileText}
                         typeStyle={2}
                     />
-                    <ModalBodyBlockField
+                    {/* <ModalBodyBlockField
                         nameField="Вопрос"
                         valueField={fullData.question}
                         icon={FileText}
                         typeStyle={2}
                         bgColor="g"
-                    />
+                    /> */}
                     <ModalBodyBlockField
                         nameField="К какому управлению приём"
                         valueField={unitName || '-'}

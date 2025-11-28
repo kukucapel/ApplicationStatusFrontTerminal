@@ -157,7 +157,7 @@ export default function AppointmentMainBody({
                                 <User className="bg-blue-100 w-10 h-10 rounded-2xl p-1" />
                                 {person.fio}
                             </div>
-                            {step === 1 || step === 2 ? (
+                            {step === 1 ? (
                                 <Textarea
                                     value={
                                         step === 1 ? data.theme : data.question
@@ -185,7 +185,7 @@ export default function AppointmentMainBody({
                                         'ring-2 ring-blue-500 h-100'
                                     } `}
                                 />
-                            ) : step === 3 ? (
+                            ) : step === 2 ? (
                                 <div className="flex flex-col items-center gap-3 justify-center">
                                     <span>К кому приём:</span>
                                     <HomeButton
@@ -217,11 +217,12 @@ export default function AppointmentMainBody({
                                 </div>
                             )}
                         </div>
-                        {step !== 4 && (
+                        {step !== 3 && (
                             <div className="flex justify-center gap-20">
                                 <HomeButton
                                     styleColor="white"
                                     className="flex gap-3 items-center px-35 py-8 text-2xl rounded-4xl"
+                                    isActive={step === 1}
                                     onClick={() => {
                                         if (step !== 1) {
                                             setStep((prev) => prev - 1);
@@ -239,16 +240,15 @@ export default function AppointmentMainBody({
                                     } items-center  py-8 text-2xl rounded-4xl`}
                                     isActive={
                                         (step === 1 && !data.theme) ||
-                                        (step === 2 && !data.question) ||
-                                        (step === 3 && sendFlag)
+                                        (step === 2 && sendFlag)
                                     }
                                     onClick={() => {
-                                        if (step !== 3)
+                                        if (step !== 2)
                                             setStep((prev) => prev + 1);
                                         else setShowSend(true);
                                     }}
                                 >
-                                    {step === 3 ? 'Отправить' : 'Далее'}
+                                    {step === 2 ? 'Отправить' : 'Далее'}
                                 </HomeButton>
                             </div>
                         )}
