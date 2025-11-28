@@ -1,8 +1,9 @@
 import { FullApplicationI } from '@/dtos/ApplicationDto';
 import { apiRequest } from './apiClient';
+// import { encryptPayload } from './aes256';
 
 export async function sendApplication(data: any) {
-  // const encryptString = encryptPhp({ ...data });
+  // const encryptString = encryptPayload({ ...data });
   // console.log(encryptString);
   // return apiRequest(`/admin/requests/external`, {
   //   method: 'POST',

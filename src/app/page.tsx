@@ -12,13 +12,13 @@ export default function Home() {
     const handleGosClick = () => {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = 'https://app.kaluga-gov.ru/v2/index.php';
+        form.action = process.env.NEXT_PUBLIC_GOS_ACTION!;
 
         // скрытые поля
         const fields = {
-            url: 'http://192.168.8.12:3001',
+            url: 'http://localhost:3000/api/gos-terminal',
             type: 'terminal',
-            element_id: window.location.href,
+            element_id: 'http://localhost:3000/api/gos-terminal',
         };
 
         Object.entries(fields).forEach(([name, value]) => {
@@ -42,7 +42,8 @@ export default function Home() {
         {
             title: 'Записаться на приём',
             handleClick: () => {
-                router.push('/appointment');
+                // router.push('/appointment');
+                handleGosClick();
             },
             icon: CalendarDays,
         },
