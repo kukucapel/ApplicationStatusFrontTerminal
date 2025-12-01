@@ -1,11 +1,12 @@
 'use client';
 
-import AppointmentMainBody from '@/components/Appointment/AppointmentMainBody';
+import AppealsMainBody from '@/components/Appeals/AppealsMainBody';
+// import AppointmentMainBody from '@/components/Appointment/AppointmentMainBody';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function AppointmentAuth({}: {}) {
+export default function Appeals({}: {}) {
     const [person, setPerson] = useState(null);
     const search = useSearchParams();
 
@@ -22,6 +23,7 @@ export default function AppointmentAuth({}: {}) {
             .then((data) => setPerson(data))
             .catch((e) => console.error(e));
     }, []);
-
-    return <AppointmentMainBody person={person} />;
+    useEffect;
+    // return JSON.stringify(person);
+    return person && <AppealsMainBody person={person} />;
 }

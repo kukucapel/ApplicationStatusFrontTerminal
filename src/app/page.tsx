@@ -8,41 +8,18 @@ import { Mail, CalendarDays, Settings } from 'lucide-react';
 export default function Home() {
     const router = useRouter();
 
-    const handleGosClick = () => {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = process.env.NEXT_PUBLIC_GOS_ACTION!;
-
-        // скрытые поля
-        const fields = {
-            url: process.env.NEXT_PUBLIC_GOS_URL!,
-            type: 'terminal',
-            element_id: process.env.NEXT_PUBLIC_GOS_URL!,
-        };
-
-        Object.entries(fields).forEach(([name, value]) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            input.value = value;
-            form.appendChild(input);
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-    };
-
     const BUTTONS = [
         {
             title: 'Оставить обращение',
-            handleClick: undefined,
+            handleClick: () => {
+                router.push('/appeals_auth');
+            },
             icon: Mail,
         },
         {
             title: 'Записаться на приём',
             handleClick: () => {
                 router.push('/appointment_auth');
-                // handleGosClick();
             },
             icon: CalendarDays,
         },

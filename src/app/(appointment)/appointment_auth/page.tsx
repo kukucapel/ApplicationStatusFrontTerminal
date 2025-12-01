@@ -18,7 +18,8 @@ export default function Auth() {
         const fields = {
             url: process.env.NEXT_PUBLIC_GOS_URL!,
             type: 'terminal',
-            element_id: process.env.NEXT_PUBLIC_GOS_URL!,
+            element_id:
+                process.env.NEXT_PUBLIC_GOS_URL! + '?manual=appointment',
         };
 
         Object.entries(fields).forEach(([name, value]) => {

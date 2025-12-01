@@ -1,6 +1,5 @@
 'use client';
 
-import { FullApplicationI } from '@/dtos/ApplicationDto';
 import Modal from '../ui/ModalUi/Modal';
 import ModalBody from '../ui/ModalUi/ModalBody';
 import ModalHeader from '../ui/ModalUi/ModalHeader';
@@ -9,19 +8,19 @@ import ModalBodyBlockField from '../ui/ModalUi/ModalBodyBlockField';
 import { FileText, Mail, MapPinHouse, Phone, User } from 'lucide-react';
 import HomeButton from '../Home/HomeButton';
 
-interface ModalAppointmentProps {
+import { FullAppealI } from '@/dtos/AppealDto';
+
+interface ModalAppealsProps {
     onClose: () => void;
-    fullData: FullApplicationI;
-    unitName: string | null;
+    fullData: FullAppealI;
     setAlert: (newState: boolean) => void;
 }
 
-export default function ModalAppointment({
+export default function ModalAppeals({
     onClose,
     fullData,
-    unitName,
     setAlert,
-}: ModalAppointmentProps) {
+}: ModalAppealsProps) {
     return (
         <Modal>
             <ModalHeader
@@ -74,25 +73,18 @@ export default function ModalAppointment({
                 </ModalBodyBlock>
                 <ModalBodyBlock typeStyle={2} title="Детали обращения">
                     <ModalBodyBlockField
-                        nameField="Тема"
-                        valueField={fullData.theme}
+                        nameField="Текст обращения"
+                        valueField={fullData.appeal}
                         icon={FileText}
                         typeStyle={2}
                     />
                     {/* <ModalBodyBlockField
-                        nameField="Вопрос"
-                        valueField={fullData.question}
-                        icon={FileText}
-                        typeStyle={2}
-                        bgColor="g"
-                    /> */}
-                    <ModalBodyBlockField
-                        nameField="К какому управлению приём"
-                        valueField={unitName || '-'}
-                        icon={FileText}
-                        typeStyle={2}
-                        bgColor="g"
-                    />
+                            nameField="Вопрос"
+                            valueField={fullData.question}
+                            icon={FileText}
+                            typeStyle={2}
+                            bgColor="g"
+                        /> */}
                 </ModalBodyBlock>
                 <div className="flex gap-10  justify-between">
                     <HomeButton

@@ -76,7 +76,7 @@ export function decrypt(encryptedBase64: string) {
   ]);
 
   const decryptedString = decrypted.toString('utf8');
-  // console.log(decryptedString);
+
   const obj = unserialize(decryptedString);
 
   const person = {
