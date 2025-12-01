@@ -31,3 +31,42 @@ body {
     overflow: hidden; /* убирает скролл */
     touch-action: pan-x pan-y; /* управление жестами */
 }
+
+/* Страница 80x80 мм */
+@page {
+    size: 80mm 80mm;
+    margin: 0;
+}
+
+@media print {
+    body * {
+        visibility: hidden; /* скрываем всё */
+    }
+
+    #print-area,
+    #print-area * {
+        visibility: visible; /* показываем только QR-блок */
+    }
+
+    #print-area {
+        width: 80mm;
+        height: 80mm;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    canvas {
+        width: 60mm !important;
+        height: 60mm !important;
+    }
+}
+
+/* Скрытый блок на экране */
+#print-area {
+    display: none;
+}

@@ -23,11 +23,11 @@ export default function Home() {
             },
             icon: CalendarDays,
         },
-        {
-            title: 'Электронные услуги',
-            handleClick: undefined,
-            icon: Settings,
-        },
+        // {
+        //     title: 'Электронные услуги',
+        //     handleClick: undefined,
+        //     icon: Settings,
+        // },
     ];
     return (
         <div

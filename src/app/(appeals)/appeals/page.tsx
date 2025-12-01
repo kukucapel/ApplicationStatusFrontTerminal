@@ -1,7 +1,6 @@
 'use client';
 
 import AppealsMainBody from '@/components/Appeals/AppealsMainBody';
-// import AppointmentMainBody from '@/components/Appointment/AppointmentMainBody';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

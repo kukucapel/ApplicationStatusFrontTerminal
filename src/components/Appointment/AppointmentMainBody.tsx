@@ -65,6 +65,8 @@ export default function AppointmentMainBody({
     >(null);
     const [showKeyboard, setShowKeyboard] = useState(false);
 
+    const [url, setUrl] = useState<string | null>(null);
+
     const [unitName, setUnitName] = useState<string | null>(null);
     const [showUnit, setShowUnit] = useState<boolean>(false);
     const [unit, setUnit] = useState<Unit | null>(null);
@@ -72,7 +74,8 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        // await sendApplication({ ...person, ...data });
+        await sendApplication({ applicant: person, application: data });
+        // console.log({ applicant: person, application: data });
         setAlert(false);
         setShowSend(false);
         setStep(3);
