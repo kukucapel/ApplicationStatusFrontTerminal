@@ -41,7 +41,7 @@ export default function AppealsAuth() {
 
             if (personal) {
                 router.push(
-                    `/appointment?personal=${encodeURIComponent(personal)}`
+                    `/appeals?personal=${encodeURIComponent(personal)}`
                 );
             }
         };
