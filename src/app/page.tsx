@@ -4,10 +4,25 @@ import Logo from '@/components/ui/Logo';
 import HomeButtonBlock from '@/components/Home/HomeButtonBlock';
 import { useRouter } from 'next/navigation';
 import { Mail, CalendarDays, Settings } from 'lucide-react';
+import { useRef, useEffect } from 'react';
+import QRCode from 'qrcode';
 
 export default function Home() {
     const router = useRouter();
+    const url =
+        'https://app.kaluga-gov.ru/status/share?token=8591e58390a4859aa75e2481527b51c265eca1648c23d84b19392263c04617c3';
 
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    async function handlePrint() {
+        if (!canvasRef.current) return;
+
+        // Генерируем QR в скрытом canvas
+        await QRCode.toCanvas(canvasRef.current, url, { width: 300 });
+
+        // Печатаем
+        window.print();
+    }
     const BUTTONS = [
         {
             title: 'Оставить обращение',
@@ -19,7 +34,8 @@ export default function Home() {
         {
             title: 'Записаться на приём',
             handleClick: () => {
-                router.push('/appointment_auth');
+                // router.push('/appointment_auth');
+                handlePrint();
             },
             icon: CalendarDays,
         },
@@ -43,6 +59,10 @@ export default function Home() {
             </div>
 
             <HomeButtonBlock BUTTONS={BUTTONS} />
+            {/* скрытая зона для печати */}
+            <div id="print-area">
+                <canvas ref={canvasRef}></canvas>
+            </div>
         </div>
     );
 }
