@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Mail, CalendarDays, Settings } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
+import Print from '@/components/ui/Print';
 
 export default function Home() {
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function Home() {
         // Генерируем QR в скрытом canvas
         await QRCode.toCanvas(canvasRef.current, url, { width: 300 });
 
-        // Печатаем
+        // // Печатаем
         window.print();
     }
     const BUTTONS = [
@@ -34,8 +35,8 @@ export default function Home() {
         {
             title: 'Записаться на приём',
             handleClick: () => {
-                // router.push('/appointment_auth');
-                handlePrint();
+                router.push('/appointment_auth');
+                // handlePrint();
             },
             icon: CalendarDays,
         },
@@ -59,10 +60,6 @@ export default function Home() {
             </div>
 
             <HomeButtonBlock BUTTONS={BUTTONS} />
-            {/* скрытая зона для печати */}
-            <div id="print-area">
-                <canvas ref={canvasRef}></canvas>
-            </div>
         </div>
     );
 }

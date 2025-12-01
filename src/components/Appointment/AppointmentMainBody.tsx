@@ -14,6 +14,7 @@ import ModalAppointment from '../Modals/ModalAppointment';
 import ModalAlert from '../Modals/ModalAlert';
 import { sendApplication } from '@/lib/appointment';
 import KeyboardSimple from '../ui/KeyboardSimple';
+import ModalQr from '../Modals/ModalQr';
 
 interface AppointmentMainBodyProps {
     person: any;
@@ -29,7 +30,7 @@ export default function AppointmentMainBody({
         question: '',
         assigned_unit_id: null,
     });
-
+    const [showQr, setShowQr] = useState<boolean>(false);
     const onChange = (key: string) => {
         if (!focusedField) return;
 
@@ -74,7 +75,11 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        await sendApplication({ applicant: person, application: data });
+        const url = await sendApplication({
+            applicant: person,
+            application: data,
+        });
+        setUrl(url.shar_link);
         // console.log({ applicant: person, application: data });
         setAlert(false);
         setShowSend(false);
@@ -156,10 +161,12 @@ export default function AppointmentMainBody({
                                 showKeyboard && '-translate-y-31'
                             }`}
                         >
-                            <div className="flex items-center gap-5 justify-center text-gray-900 text-4xl">
-                                <User className="bg-blue-100 w-10 h-10 rounded-2xl p-1" />
-                                {person.fio}
-                            </div>
+                            {step !== 3 && (
+                                <div className="flex items-center gap-5 justify-center text-gray-900 text-4xl">
+                                    <User className="bg-blue-100 w-10 h-10 rounded-2xl p-1" />
+                                    {person.fio}
+                                </div>
+                            )}
                             {step === 1 ? (
                                 <Textarea
                                     value={
@@ -207,16 +214,36 @@ export default function AppointmentMainBody({
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center gap-10 justify-center">
-                                    <h3 className="text-4xl">
-                                        Ваша заявка отправлена
-                                    </h3>
-                                    <HomeButton
-                                        styleColor="color"
-                                        className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
-                                        onClick={() => router.push('/')}
-                                    >
-                                        Вернуться на главную
-                                    </HomeButton>
+                                    <div className="space-y-2">
+                                        <h3 className="text-4xl">
+                                            Ваша заявка отправлена
+                                        </h3>
+                                        <p className="text-xl w-160 text-gray-700">
+                                            Для отслеживания заявки на Вашу
+                                            электронную почту
+                                            <span className="text-black underline">
+                                                {' '}
+                                                {person.email}
+                                            </span>{' '}
+                                            было направлено письмо с временной
+                                            ссылкой. Или же отсканировать QR-код
+                                        </p>
+                                    </div>
+                                    <div className="flex justify-center gap-20">
+                                        <HomeButton
+                                            styleColor="white"
+                                            className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
+                                        >
+                                            Показать QR-код
+                                        </HomeButton>
+                                        <HomeButton
+                                            styleColor="blue"
+                                            className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
+                                            onClick={() => router.push('/')}
+                                        >
+                                            Вернуться на главную
+                                        </HomeButton>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -285,6 +312,7 @@ export default function AppointmentMainBody({
                     <KeyboardSimple onChange={onChange} />
                 </div>
             )}
+            {showQr && url && <ModalQr url={url} />}
         </div>
     );
 }
