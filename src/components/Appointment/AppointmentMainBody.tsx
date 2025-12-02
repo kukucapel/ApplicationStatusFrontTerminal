@@ -12,7 +12,7 @@ import { ApplicationI } from '@/dtos/ApplicationDto';
 import ModalUnitTree from '../Modals/ModalUnitTree';
 import ModalAppointment from '../Modals/ModalAppointment';
 import ModalAlert from '../Modals/ModalAlert';
-import { sendApplication } from '@/lib/appointment';
+import { sendApplication, sendPrint } from '@/lib/appointment';
 import KeyboardSimple from '../ui/KeyboardSimple';
 import ModalQr from '../Modals/ModalQr';
 
@@ -68,12 +68,25 @@ export default function AppointmentMainBody({
 
     const [url, setUrl] = useState<string | null>(null);
     const [showQr, setShowQr] = useState<boolean>(false);
+    const [printing, setPrinting] = useState<boolean>(false);
 
     const [unitName, setUnitName] = useState<string | null>(null);
     const [showUnit, setShowUnit] = useState<boolean>(false);
     const [unit, setUnit] = useState<Unit | null>(null);
 
     const [sendFlag, setSendFlag] = useState<boolean>(true);
+
+    const handlePrint = async () => {
+        if (url && !printing) {
+            const res = await sendPrint({
+                text: url,
+                titleTop: 'Администрация городского округа города Калуги',
+                titleBottom:
+                    'Отсканируйте QR-код для отслеживания статуса заявки.',
+            });
+            setPrinting(res);
+        }
+    };
 
     const handleSend = async () => {
         const urlRow = await sendApplication({
@@ -317,7 +330,12 @@ export default function AppointmentMainBody({
                 </div>
             )}
             {showQr && url && (
-                <ModalQr onClose={() => setShowQr(false)} url={url} />
+                <ModalQr
+                    printing={printing}
+                    handlePrint={() => handlePrint()}
+                    onClose={() => setShowQr(false)}
+                    url={url}
+                />
             )}
         </div>
     );

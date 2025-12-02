@@ -9,9 +9,16 @@ import HomeButton from '../Home/HomeButton';
 interface ModalQr {
     url: string;
     onClose: () => void;
+    handlePrint: () => void;
+    printing: boolean;
 }
 
-export default function ModalQr({ url, onClose }: ModalQr) {
+export default function ModalQr({
+    url,
+    onClose,
+    handlePrint,
+    printing,
+}: ModalQr) {
     return (
         <Modal type={2}>
             <ModalHeader
@@ -34,6 +41,8 @@ export default function ModalQr({ url, onClose }: ModalQr) {
                     <HomeButton
                         styleColor="blue "
                         className="py-5 rounded-xl text-xl  grow"
+                        isActive={printing}
+                        onClick={handlePrint}
                     >
                         Печать
                     </HomeButton>
