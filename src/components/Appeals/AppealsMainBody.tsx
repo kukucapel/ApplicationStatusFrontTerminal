@@ -174,11 +174,11 @@ export default function AppealsMainBody({ person }: AppealsMainBodyProps) {
                 </div>
             </div>
 
-            {showKeyboard && (
+            {/* {showKeyboard && (
                 <div ref={keyboardRef}>
                     <KeyboardSimple onChange={onChange} />
                 </div>
-            )}
+            )} */}
             {showSend && (
                 <ModalAppeals
                     fullData={{ ...person, ...data }}

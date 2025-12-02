@@ -311,11 +311,11 @@ export default function AppointmentMainBody({
                     onClose={() => setAlert(false)}
                 />
             )}
-            {showKeyboard && (
+            {/* {showKeyboard && (
                 <div ref={keyboardRef}>
                     <KeyboardSimple onChange={onChange} />
                 </div>
-            )}
+            )} */}
             {showQr && url && (
                 <ModalQr onClose={() => setShowQr(false)} url={url} />
             )}
