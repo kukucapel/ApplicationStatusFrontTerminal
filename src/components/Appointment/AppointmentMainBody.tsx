@@ -30,7 +30,7 @@ export default function AppointmentMainBody({
         question: '',
         assigned_unit_id: null,
     });
-    const [showQr, setShowQr] = useState<boolean>(false);
+
     const onChange = (key: string) => {
         if (!focusedField) return;
 
@@ -67,6 +67,7 @@ export default function AppointmentMainBody({
     const [showKeyboard, setShowKeyboard] = useState(false);
 
     const [url, setUrl] = useState<string | null>(null);
+    const [showQr, setShowQr] = useState<boolean>(false);
 
     const [unitName, setUnitName] = useState<string | null>(null);
     const [showUnit, setShowUnit] = useState<boolean>(false);
@@ -75,11 +76,13 @@ export default function AppointmentMainBody({
     const [sendFlag, setSendFlag] = useState<boolean>(true);
 
     const handleSend = async () => {
-        const url = await sendApplication({
+        const urlRow = await sendApplication({
             applicant: person,
             application: data,
         });
-        setUrl(url.shar_link);
+
+        setUrl(urlRow.share_url);
+        console.log(urlRow);
         // console.log({ applicant: person, application: data });
         setAlert(false);
         setShowSend(false);
@@ -233,6 +236,7 @@ export default function AppointmentMainBody({
                                         <HomeButton
                                             styleColor="white"
                                             className="text-center w-120 h-30 items-center px-4 py-2 text-2xl rounded-xl"
+                                            onClick={() => setShowQr(true)}
                                         >
                                             Показать QR-код
                                         </HomeButton>
@@ -312,7 +316,9 @@ export default function AppointmentMainBody({
                     <KeyboardSimple onChange={onChange} />
                 </div>
             )}
-            {showQr && url && <ModalQr url={url} />}
+            {showQr && url && (
+                <ModalQr onClose={() => setShowQr(false)} url={url} />
+            )}
         </div>
     );
 }
