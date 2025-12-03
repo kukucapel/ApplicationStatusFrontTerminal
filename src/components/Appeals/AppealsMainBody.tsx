@@ -9,6 +9,7 @@ import Textarea from '../ui/Textarea';
 import KeyboardSimple from '../ui/KeyboardSimple';
 import ModalAppeals from '../Modals/ModalAppeals';
 import ModalAlert from '../Modals/ModalAlert';
+import { sendAppeal } from '@/lib/appeal';
 
 interface AppealsMainBodyProps {
     person: any;
@@ -27,7 +28,10 @@ export default function AppealsMainBody({ person }: AppealsMainBodyProps) {
     const keyboardRef = useRef<HTMLDivElement | null>(null);
     const pageRef = useRef<HTMLDivElement | null>(null);
     const handleSend = async () => {
-        // await sendApplication({ ...person, ...data });
+        await sendAppeal({
+            applicant: person,
+            question: data.appeal,
+        });
         setAlert(false);
         setShowSend(false);
         setStep(2);

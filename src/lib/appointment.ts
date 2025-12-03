@@ -1,5 +1,8 @@
-import { FullApplicationI } from '@/dtos/ApplicationDto';
+// import { FullApplicationI } from '@/dtos/ApplicationDto';
 import { apiRequest } from './apiClient';
+
+export const API_PRINT =
+  process.env.NEXT_PUBLIC_PRINT || 'http://localhost:5000';
 
 export async function sendApplication(data: any) {
   console.log(data);
@@ -16,7 +19,7 @@ export async function sendPrint(data: {
   titleTop: string;
   titleBottom: string;
 }) {
-  const response = await fetch('http://172.16.26.210:3000/print', {
+  const response = await fetch(API_PRINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

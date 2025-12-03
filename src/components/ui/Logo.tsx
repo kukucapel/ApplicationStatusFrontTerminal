@@ -48,10 +48,10 @@ export default function Logo({
             </div>
 
             <div>
-                <h1 className="text-3xl sm:text-6xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl sm:text-6xl font-bold select-none text-gray-900 mb-2">
                     {title || 'Система личного приёма'}
                 </h1>
-                <p className="text-2xl text-gray-600">{subTitle}</p>
+                <p className="text-2xl text-gray-600 select-none">{subTitle}</p>
             </div>
         </div>
     );
