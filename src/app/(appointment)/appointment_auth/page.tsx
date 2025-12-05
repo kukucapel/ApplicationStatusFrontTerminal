@@ -76,13 +76,13 @@ export default function Auth() {
                             alt="Герб города"
                             className="w-100 h-100"
                         />
-                        <p
+                        {/* <p
                             className="text-sm underline"
                             onClick={() => handleGosClick()}
                         >
                             Если у Вас нету возможности отсканировать qr-код, Вы
                             можете ввести данные вручню
-                        </p>
+                        </p> */}
                     </div>
                 </div>
             </div>
